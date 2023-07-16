@@ -1,13 +1,10 @@
-
 <script setup lang="ts">
-import ShallowReactive from './lessons/ShallowReactive.vue';
-
-
+import TimeTable from './components/TimeTable/TimeTable.vue';
+import DeepReactive from './lessons/DeepReactive.vue';
 </script>
 
 <template>
-  <ShallowReactive />
+    <DeepReactive />
 </template>
 
 <style scoped></style>
-./lessons/DeepReactive.vue./lessons/ShallowReactive.vue

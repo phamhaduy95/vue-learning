@@ -1,10 +1,9 @@
 <script setup lang="ts">
-import { onUpdated } from 'vue'
-import { type SampleData } from './type'
-import { ref, watch } from 'vue'
-import ChildComponent from './ChildComponent.vue'
+import { onUpdated } from 'vue';
+import { type SampleData } from './type';
+import { ref, watch } from 'vue';
+import ChildComponent from './ChildComponent.vue';
 import AnotherChild from './AnotherChild.vue';
-
 
 const initialData: SampleData = {
     id: crypto.randomUUID(),
@@ -12,43 +11,47 @@ const initialData: SampleData = {
         id: crypto.randomUUID(),
         name: 'Hung'
     }
-}
+};
 
-const data = ref(initialData)
+const data = ref(initialData);
 
 const changePersonId = () => {
-    data.value.person.id = crypto.randomUUID()
-}
+    data.value.person.id = crypto.randomUUID();
+};
 
 const changeToNewPerson = () => {
-    data.value = { ...initialData }
-}
+    data.value = { ...initialData };
+};
 
 const handleChangeIdClick = () => {
-    changePersonId()
-}
+    changePersonId();
+};
 
 const handleChangeToNewPersonClick = () => {
     changeToNewPerson();
-}
+};
 
 watch(
     () => data.value.person,
     (value, oldValue) => {
-        console.log(value === oldValue)
+        console.log(value === oldValue);
     }
-)
+);
 
 watch(
     () => data.value,
     (value, oldValue) => {
-        console.log(value === oldValue)
+        console.log(value === oldValue);
     }
-)
+);
+
+watch(data, (value) => {
+    console.log('value changed');
+});
 
 onUpdated(() => {
-    console.log(' component update ')
-})
+    console.log(' component update ');
+});
 </script>
 
 <template>
@@ -75,13 +78,16 @@ onUpdated(() => {
         </v-row>
         <v-row>
             <v-col>
-                <v-btn :variant="'outlined'" :ripple="false" @click="handleChangeIdClick">Update id</v-btn>
+                <v-btn :variant="'outlined'" :ripple="false" @click="handleChangeIdClick"
+                    >Update id</v-btn
+                >
             </v-col>
             <v-col>
-                <v-btn :variant="'outlined'" :ripple="false" @click="handleChangeToNewPersonClick">Update Person</v-btn>
+                <v-btn :variant="'outlined'" :ripple="false" @click="handleChangeToNewPersonClick"
+                    >Update Person</v-btn
+                >
             </v-col>
         </v-row>
-
     </v-container>
 </template>
 
