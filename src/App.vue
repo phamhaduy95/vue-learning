@@ -1,14 +1,14 @@
 
 <script setup lang="ts">
-import BaseList, { type Item, type BaseListProps } from './components/BaseList.vue';
-const itemList: Array<Item> = [{ name: "van" }, { name: "hung" }];
-const format: BaseListProps["format"] = (a) => {
-  return a.toUpperCase();
-}
+import DeepReactive from './components/lessons/DeepReactive.vue';
+import ShallowReactive from './components/lessons/ShallowReactive.vue';
+
+
+
 </script>
 
 <template>
-  <BaseList :item-list="itemList" :format="format" />
+  <ShallowReactive />
 </template>
 
 <style scoped></style>
