@@ -1,8 +1,6 @@
 
 <script setup lang="ts">
-import DeepReactive from './components/lessons/DeepReactive.vue';
-import ShallowReactive from './components/lessons/ShallowReactive.vue';
-
+import ShallowReactive from './lessons/ShallowReactive.vue';
 
 
 </script>
@@ -12,3 +10,4 @@ import ShallowReactive from './components/lessons/ShallowReactive.vue';
 </template>
 
 <style scoped></style>
+./lessons/DeepReactive.vue./lessons/ShallowReactive.vue
