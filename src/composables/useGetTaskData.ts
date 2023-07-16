@@ -1,10 +1,10 @@
 import type { ITask } from '@/types/task';
 import { generateTasksList } from '@/utils/generateTaskData';
-import { readonly } from 'vue';
+import { readonly, shallowRef } from 'vue';
 
 export function useGetTaskData() {
     const tasks: Array<ITask> = generateTasksList(10);
-    console.log(tasks);
+    const taskList = shallowRef(tasks);
 
-    return readonly(tasks);
+    return readonly(taskList);
 }

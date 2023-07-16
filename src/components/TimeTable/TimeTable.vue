@@ -2,6 +2,8 @@
 import type { PropType } from 'vue';
 import { type TableHeader } from './type';
 import { useGenerateTimeTableRows } from './useGenerateTimeTableRows';
+import TimeTableRow from './TimeTableRow.vue';
+import { useGetTaskData } from '@/composables/useGetTaskData';
 
 const props = defineProps({
     mode: {
@@ -11,43 +13,51 @@ const props = defineProps({
 });
 
 const timeHeaders: Array<TableHeader> = [
-    { value: 'hour', text: 'hour' },
-    { value: 'timeFrame', text: 'timeFrame' }
+    { value: 'hour', text: '' },
+    { value: 'timeFrame', text: '' }
 ];
 
 const otherHeader: Array<TableHeader> = [
-    { value: 'task_id', text: 'taskId' },
-    { value: 'task_name', text: ' task Name' }
+    { value: 'taskId', text: 'Id' },
+    { value: 'taskName', text: ' Name' },
+    { value: 'taskDes', text: ' Description' }
 ];
 
 const headers = timeHeaders.concat(otherHeader);
-const rows = useGenerateTimeTableRows(headers);
+const rows = useGenerateTimeTableRows();
+const tasksList = useGetTaskData();
 </script>
 
 <template>
     <table class="TimeTable">
         <thead>
             <tr>
-                <slot
-                    v-for="(header, index) in headers"
-                    :key="index"
-                    :name="'header.'.concat(header.value)"
-                >
-                    <th class="TimeTable__HeaderCell">
-                        {{ header.text }}
-                    </th>
-                </slot>
+                <th v-for="(header, index) in headers" :key="index" class="TimeTable__HeaderCell">
+                    {{ header.text }}
+                </th>
             </tr>
         </thead>
-        <tbody></tbody>
+        <tbody>
+            <TimeTableRow
+                v-for="(timeData, index) of rows"
+                :key="index"
+                :time-data="timeData"
+                :tasks="tasksList"
+            />
+        </tbody>
     </table>
 </template>
 
 <style scoped lang="scss">
+$border-color: hsl(0, 0%, 50%);
+$bg-color: hsl(0, 0%, 80%);
+
 .TimeTable {
     width: 100%;
     table-layout: fixed;
-    border: 1px solid grey;
+    .TimeTable__HeaderCell {
+        border: 1px solid $border-color;
+        padding: 0.25rem;
+    }
 }
 </style>
-./useGenerateTimeTableRows

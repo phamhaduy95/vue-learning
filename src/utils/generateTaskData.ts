@@ -3,9 +3,9 @@ import moment from 'moment';
 
 const BASE_TIME_UNIT = 20; // 20 mins
 
-function getRandomElapsedTime(max = 0) {
+function getRandomElapsedTime(max = 0, offset = 1) {
     if (max < 0) max = 0;
-    return (Math.random() * max + 1) * BASE_TIME_UNIT;
+    return Math.floor(Math.random() * max + offset) * BASE_TIME_UNIT;
 }
 
 export function generateTaskData(data: Pick<ITask, 'name' | 'startTime'>) {
@@ -17,7 +17,8 @@ export function generateTaskData(data: Pick<ITask, 'name' | 'startTime'>) {
         id: crypto.randomUUID(),
         name: data.name,
         startTime: startTime,
-        endTime: endTime
+        endTime: endTime,
+        des: ''
     };
 
     return newTask;
@@ -37,7 +38,7 @@ export function generateTasksList(numberOfSample: number) {
         const previousTask = acc[index - 1];
         const previousEndTime = previousTask.endTime;
         const startTimeForNewTask = moment(previousEndTime)
-            .add(getRandomElapsedTime(6), 'minute')
+            .add(getRandomElapsedTime(3, 0), 'minute')
             .toDate();
         const newTask = generateTaskData({ name, startTime: startTimeForNewTask });
         acc.push(newTask);

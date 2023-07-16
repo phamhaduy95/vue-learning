@@ -1,5 +1,5 @@
-import { readonly, ref, watch, type MaybeRefOrGetter, toValue } from 'vue';
-import type { TaskData } from './type';
+import type { ITask } from '@/types/task';
+import { ref, toValue, watch, type MaybeRefOrGetter } from 'vue';
 
 type TaskDataInput = {
     taskName: string;
@@ -8,7 +8,7 @@ type TaskDataInput = {
 
 export const useTaskInput = (
     isEditMode: MaybeRefOrGetter<boolean>,
-    taskData: MaybeRefOrGetter<TaskData | null>
+    taskData: MaybeRefOrGetter<ITask | null>
 ) => {
     const defaultInputValue: TaskDataInput = {
         taskName: '',
@@ -22,8 +22,8 @@ export const useTaskInput = (
         (isEditMode) => {
             const data = toValue(taskData);
             if (isEditMode && data) {
-                inputData.value.taskDes = data.taskDes;
-                inputData.value.taskName = data.taskName;
+                inputData.value.taskDes = data.des;
+                inputData.value.taskName = data.name;
             }
         }
     );
