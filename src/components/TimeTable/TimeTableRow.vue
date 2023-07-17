@@ -40,7 +40,6 @@ watchEffect(() => {
     for (let task of props.tasks) {
         const range = { start: task.startTime, end: task.endTime };
         if (isTimeWithInRange(timeOfRow, range)) {
-            console.log(formatTime(task.endTime));
             if (isTheSameTimeFrame(timeOfRow, task.startTime)) {
                 mode.value = 'start';
                 taskData.value = { ...task };
@@ -64,6 +63,10 @@ const styleBaseOnMode = computed(() => {
             return '';
     }
 });
+
+const handleMouseOver = (e: MouseEvent) => {
+    e.stopPropagation();
+};
 </script>
 
 <template>
@@ -74,7 +77,7 @@ const styleBaseOnMode = computed(() => {
         <td class="TimeTable__Cell">{{ taskData?.name }}</td>
         <td class="TimeTable__Cell">{{ taskData?.des }}</td>
     </tr>
-    <tr v-else>
+    <tr v-else @mouseup.self="handleMouseOver">
         <td class="TimeTable__Cell">{{ timeData.hour }}</td>
         <td class="TimeTable__Cell">{{ formatTime(timeData.time) }}</td>
         <td class="TimeTable__Cell">
@@ -98,10 +101,11 @@ $bg-color: hsl(0, 0%, 60%);
 
 .TimeTable__Row {
     > .TimeTable__Cell {
+        caret-color: transparent;
         padding: 0.5rem 0;
         text-align: center;
         border: 1px solid $border-color;
-        border-bottom: none;
+        border-top: none;
         border-left: none;
         &:first-child {
             border-left: 1px solid $border-color;
@@ -110,6 +114,12 @@ $bg-color: hsl(0, 0%, 60%);
     &.is-within-task-time,
     &.is-start-time-of-task {
         background-color: $bg-color;
+    }
+
+    &.has-no-task {
+        > .TimeTable__Cell:nth-child(2) {
+            color: hsl(240, 60%, 50%);
+        }
     }
 
     &:last-child {
